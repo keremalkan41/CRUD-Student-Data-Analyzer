@@ -112,4 +112,21 @@ btn7.grid(row=6,column=0,padx=5,pady=5,sticky="w")
 btn8 = tk.Button(lbf2,text="UPDATE BY ID",bg="gray",fg="black",highlightbackground="black",highlightthickness=0,width=20)
 btn8.grid(row=6,column=1,padx=5,pady=5,sticky="")
 
+
+#label frame 3 (listbox)
+lbf3 = tk.LabelFrame(root,text="List & Delete Students",bg="black",fg="white",padx=10,pady=20)
+lbf3.place(x=20,y=370)
+
+listbox = tk.Listbox(lbf3,bg="gray",fg="black",width=79,height=17,highlightbackground="black",highlightthickness=0)
+listbox.grid(row=0,column=0,padx=5,pady=5)
+
+lbl8 = tk.Label(lbf3,text="Enter Student ID: ",bg="black",fg="white",padx=5,pady=5)
+lbl8.grid(row=1,column=0,padx=5,pady=5,sticky="w")
+
+entry_id = tk.Entry(lbf3,bg="gray",fg="black",width=22,highlightbackground="black",highlightthickness=0)
+entry_id.place(x=150,y=310)
+
+btn9 = tk.Button(lbf3,text="DELETE BY ID",bg="gray",fg="black",highlightbackground="black",highlightthickness=0,width=35)
+btn9.grid(row=1,column=0,padx=5,pady=5,sticky="e")
+
 root.mainloop()
