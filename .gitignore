@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+#(Mac & VS Code)
+.DS_Store
+.vscode/
+desktop.ini
+#.bak
+tempCodeRunnerFile.py
