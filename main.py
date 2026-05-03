@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 load_dotenv()
 server = os.getenv('DB_SERVER')
@@ -154,18 +155,47 @@ def search_student():
 
 def sort_by_gpa():
     try:
+        
         conn = pyodbc.connect(conn_str)
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM studentsinfo ORDER BY gpa DESC")
+        
+        cursor.execute("SELECT fullname, gpa FROM studentsinfo ORDER BY gpa DESC")
         rows = cursor.fetchall()
+        
         if rows:
+           
+            listbox.delete(0, "end")
             for row in rows:
-                listbox.insert("end", row)
+                listbox.insert("end", f"Name: {row[0]} - GPA: {row[1]}")
+            
+           
+            analysis_win = tk.Toplevel(root)
+            analysis_win.title("GPA Analysis Chart")
+            analysis_win.geometry("600x500")
+            
+            
+            names = [row[0] for row in rows]
+            gpas = [row[1] for row in rows]
+            
+            plt.figure(figsize=(6, 4))
+            plt.clf() 
+            plt.bar(names, gpas, color='skyblue')
+            plt.xlabel('Students')
+            plt.ylabel('GPA')
+            plt.title('Student GPA Comparison')
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+
+            canvas = FigureCanvasTkAgg(plt.gcf(), master=analysis_win)
+            canvas.draw()
+            canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+            
         else:
-            listbox.insert("end", "No students found.")
+            listbox.insert("end", "No students found to analyze.")
+            
         conn.close()
     except Exception as e:
-        print(f"Error sorting students by GPA: {e}")
+        print(f"Error in GPA sorting/analysis: {e}")
 
 #labelframe 1
 lbf1 = tk.LabelFrame(root,text="Search & Commands",bg="black",fg="white",padx=10,pady=20)
